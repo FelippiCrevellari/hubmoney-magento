@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Urldev_Hubmoney>
+      <version>1.0.0.0</version>
+    </Urldev_Hubmoney>
+  </modules>
+ 
+  <global>
+
+    <fieldsets>
+      <sales_convert_quote_payment>
+        <card_number>
+          <to_order_payment>*</to_order_payment>
+        </card_number>
+        <card_cvv>
+          <to_order_payment>*</to_order_payment>
+        </card_cvv>
+		<card_month>
+          <to_order_payment>*</to_order_payment>
+        </card_month>
+		<card_year>
+          <to_order_payment>*</to_order_payment>
+        </card_year>
+		<card_name>
+          <to_order_payment>*</to_order_payment>
+        </card_name>
+		<card_parc>
+          <to_order_payment>*</to_order_payment>
+        </card_parc>
+      </sales_convert_quote_payment>
+    </fieldsets>
+     
+    <helpers>
+      <hubmoney>
+        <class>Urldev_Hubmoney_Helper</class>
+      </hubmoney>
+    </helpers>
+	
+    <blocks>
+      <hubmoney>
+        <class>Urldev_Hubmoney_Block</class>
+      </hubmoney>
+    </blocks>
+         
+    <models>
+      <hubmoney>
+        <class>Urldev_Hubmoney_Model</class>
+      </hubmoney>
+    </models>
+ 
+    <resources>
+      <hubmoney_setup>
+        <setup>
+          <module>Urldev_Hubmoney</module>
+        </setup>
+      </hubmoney_setup>
+    </resources>
+	
+	<events>
+		<sales_order_place_after>
+			<observers>
+				<hubmoney_observer>
+					<type>singleton</type>
+					<class>hubmoney/observer</class>
+					<method>autorizePay</method>
+				</hubmoney_observer>
+			</observers>
+		</sales_order_place_after>
+		
+		
+	</events>
+		
+		
+	
+  </global>
+ 
+  <default>
+    <payment>
+      <hubmoney>
+        <active>1</active>
+        <model>hubmoney/paymentmethod</model>
+        <order_status>pending</order_status>
+        <title>hubmoney</title>
+        <allowspecific>0</allowspecific>
+        <payment_action>sale</payment_action>
+      </hubmoney>
+    </payment>
+  </default>
+   
+  <frontend>
+    <routers>
+      <hubmoney>
+        <use>standard</use>
+        <args>
+          <module>Urldev_Hubmoney</module>
+          <frontName>hubmoney</frontName>
+        </args>
+      </hubmoney>
+    </routers>
+	<layout>
+		<updates>
+            <hubmoney module="UrlDev_Hubmoney">
+                <file>hubmoney.xml</file>
+            </hubmoney>
+        </updates>
+    </layout>
+		
+  </frontend>
+</config>

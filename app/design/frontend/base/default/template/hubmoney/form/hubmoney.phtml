@@ -1,0 +1,198 @@
+<?php 
+$quote = Mage::getModel('checkout/session')->getQuote();
+$quoteData= $quote->getData();
+$grandTotal=$quoteData['grand_total'];
+?>
+
+<div class="form-list" id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;">
+  
+  <div class="linha1">
+	  <div style="width:70%; float:left;">
+		<label><?php echo $this->__('Numero do catão') ?>*</label><br>
+		<span>
+		  <input type="text" title="<?php echo $this->__('Card Number') ?>" name="payment[card_number]" class="validate-cc-number" value="<?php echo $this->htmlEscape($this->getInfoData('card_number')) ?>" />
+		</span>
+	  </div>
+	  <div style="width:25%; float:left;">
+		<label><?php echo $this->__('Cod. de Seg.') ?>*</label>
+		<span>
+		  <input type="text" title="<?php echo $this->__('Card Cvv') ?>" name="payment[card_cvv]" value="<?php echo $this->htmlEscape($this->getInfoData('card_cvv')) ?>" />
+		</span>
+	  </div>
+  </div>
+
+	  <div class="expiration-date">
+	  
+	  	<center><p>Data de Validade</p></center>
+			<div class="month-exp">
+				<label><?php echo $this->__('Mês') ?>*</label><br>
+				<span>
+				 <!-- <input type="text" title="<?php// echo $this->__('Card Month') ?>" name="payment[card_month]" value="<?php//echo $this->htmlEscape($this->getInfoData('card_month')) ?>" />-->
+				  
+				<select title="<?php echo $this->__('Card Month') ?>" name="payment[card_month]" class="validate-greater-than-zero" value="<?php echo $this->htmlEscape($this->getInfoData('card_month')) ?>" >
+				<option value="0">Selecione</option>
+				<option value="1">Janeiro</option>
+				<option value="2">Fevereiro</option>
+				<option value="3">Março</option>
+				<option value="4">Abril</option>
+				<option value="5">Maio</option>
+				<option value="6">Junho</option>
+				<option value="7">Julho</option>
+				<option value="8">Agosto</option>
+				<option value="9">Setembro</option>
+				<option value="10">Outubro</option>
+				<option value="11">Novembro</option>
+				<option value="12">Dezembro</option>
+				</select>
+				</span>
+			</div>
+			<div  class="year-exp">
+				<label><?php echo $this->__('Ano') ?>*</label><br>
+				<span>
+				<!--  <input type="text" title="<?php //echo $this->__('Card Year') ?>" name="payment[card_year]" value="<?php //echo $this->htmlEscape($this->getInfoData('card_year')) ?>"-->
+				  
+				<select title="<?php echo $this->__('Card Year') ?>" name="payment[card_year]" class="validate-greater-than-zero" value="<?php echo $this->htmlEscape($this->getInfoData('card_year')) ?>">
+				<option value="0">Selecione</option>
+				<option value="2017">2017</option>
+				<option value="2018">2018</option>
+				<option value="2019">2019</option>
+				<option value="2020">2020</option>
+				<option value="2021">2021</option>
+				<option value="2022">2022</option>
+				<option value="2023">2023</option>
+				<option value="2024">2024</option>
+				<option value="2025">2025</option>
+				<option value="2026">2026</option>
+				<option value="2027">2027</option>
+				</select>
+				</span>
+		  </div>
+	</div>
+
+	
+      <div>
+    <label><?php echo $this->__('Nome (Identico ao cartão)') ?>*</label><br>
+    <span>
+      <input type="text" title="<?php echo $this->__('Card Name') ?>" name="payment[card_name]" value="<?php echo $this->htmlEscape($this->getInfoData('card_name')) ?>" />
+    </span>
+  </div>
+  
+  
+    <?php
+	$activparc = Mage::app()->getWebsite()->getConfig('payment/hubmoney/active_parc');
+	$min_parc = Mage::app()->getWebsite()->getConfig('payment/hubmoney/min_parc');
+	$semjuros = Mage::app()->getWebsite()->getConfig('payment/hubmoney/sem_juros');
+	if ($semjuros == ''){$semjuros ='3';}
+	
+	if  ($activparc == '1'){
+	?>
+  <div>
+		<label><?php echo $this->__('Parcelamento') ?>*</label><br>
+		<span>		  
+		  <select title="<?php echo $this->__('Parcelamento') ?>" name="payment[card_parc]" class="validate-greater-than-zero" value="<?php echo $this->htmlEscape($this->getInfoData('card_parc')) ?>">
+		  
+		<?php if ($min_parc !=''){
+		$parcelaminima = $min_parc ; 
+		}else{
+			$parcelaminima = '5'; 
+		}
+		
+		?>  
+		
+		<option value="1"><?php echo '1x de R$' . number_format($grandTotal, 2, ',', '.').' <b>Sem Juros</b>'; ?></option>
+		
+		<?php
+		if ($semjuros >= '2'){
+		if ($grandTotal/2 >= $parcelaminima){?>
+		<option value="2"><?php echo '2x de R$' . number_format($grandTotal/2, 2, ',', '.').' <b>Sem Juros</b>'; ?></option>
+		<?php }} else {
+		if ($grandTotal/2 >= $parcelaminima){?>
+		<option value="2"><?php echo '2x de R$' . number_format(($grandTotal/2)*1.024, 2, ',', '.').' <b>Com Juros</b> (R$'.number_format($grandTotal*1.0249, 2, ',', '.').')'; ?></option>
+		<?php }}?>
+		
+		
+		<?php
+		if ($semjuros >= '3'){
+		if ($grandTotal/3 >= $parcelaminima){?>
+		<option value="3"><?php echo '3x de R$' . number_format($grandTotal/3, 2, ',', '.').' <b>Sem Juros</b>'; ?></option>
+		<?php }} else {
+		if ($grandTotal/3 >= $parcelaminima){?>
+		<option value="3"><?php echo '3x de R$' . number_format(($grandTotal/3)*1.0478, 2, ',', '.').' <b>Com Juros</b> (R$'.number_format($grandTotal*1.0478, 2, ',', '.').')'; ?></option>
+		<?php }}?>
+		
+		
+		
+		<?php
+		if ($semjuros >= '4'){
+		if ($grandTotal/4 >= $parcelaminima){?>
+		<option value="4"><?php echo '4x de R$' . number_format($grandTotal/4, 2, ',', '.').' <b>Sem Juros</b>'; ?></option>
+		<?php }} else {
+		if ($grandTotal/4 >= $parcelaminima){?>
+		<option value="4"><?php echo '4x de R$' . number_format(($grandTotal/4)*1.0717, 2, ',', '.').' <b>Com Juros</b> (R$'.number_format($grandTotal*1.0717, 2, ',', '.').')'; ?></option>
+		<?php }}?>
+		
+		<?php
+		if ($semjuros >= '5'){
+		if ($grandTotal/5 >= $parcelaminima){?>
+		<option value="5"><?php echo '5x de R$' . number_format($grandTotal/5, 2, ',', '.').' <b>Sem Juros</b>'; ?></option>
+		<?php }} else {
+		if ($grandTotal/5 >= $parcelaminima){?>
+		<option value="5"><?php echo '5x de R$' . number_format(($grandTotal/5)*1.0899, 2, ',', '.').' <b>Com Juros</b> (R$'.number_format($grandTotal*1.0899, 2, ',', '.').')'; ?></option>
+		<?php }}?>
+		
+		<?php
+		if ($semjuros >= '6'){
+		if ($grandTotal/6 >= $parcelaminima){?>
+		<option value="6"><?php echo '6x de R$' . number_format($grandTotal/6, 2, ',', '.').' <b>Sem Juros</b>'; ?></option>
+		<?php }} else {
+		if ($grandTotal/6 >= $parcelaminima){?>
+		<option value="6"><?php echo '6x de R$' . number_format(($grandTotal/6)*1.1049, 2, ',', '.').' <b>Com Juros</b> (R$'.number_format($grandTotal*1.1049, 2, ',', '.').')'; ?></option>
+		<?php }}?>
+		
+		<?php
+		if ($semjuros >= '7'){
+		if ($grandTotal/7 >= $parcelaminima){?>
+		<option value="7"><?php echo '7x de R$' . number_format($grandTotal/7, 2, ',', '.').' <b>Sem Juros</b>'; ?></option>
+		<?php }} else {
+		if ($grandTotal/7 >= $parcelaminima){?>
+		<option value="7"><?php echo '7x de R$' . number_format(($grandTotal/7)*1.1183, 2, ',', '.').' <b>Com Juros</b> (R$'.number_format($grandTotal*1.1183, 2, ',', '.').')'; ?></option>
+		<?php }}?>
+		
+		<?php
+		if ($semjuros >= '8'){
+		if ($grandTotal/8 >= $parcelaminima){?>
+		<option value="8"><?php echo '8x de R$' . number_format($grandTotal/8, 2, ',', '.').' <b>Sem Juros</b>'; ?></option>
+		<?php }} else {
+		if ($grandTotal/8 >= $parcelaminima){?>
+		<option value="8"><?php echo '8x de R$' . number_format(($grandTotal/8)*1.1249, 2, ',', '.').' <b>Com Juros</b> (R$'.number_format($grandTotal*1.1249, 2, ',', '.').')'; ?></option>
+		<?php }}?>
+		
+		<?php
+		if ($semjuros >= '9'){
+		if ($grandTotal/9 >= $parcelaminima){?>
+		<option value="9"><?php echo '9x de R$' . number_format($grandTotal/9, 2, ',', '.').' <b>Sem Juros</b>'; ?></option>
+		<?php }} else {
+		if ($grandTotal/9 >= $parcelaminima){?>
+		<option value="9"><?php echo '9x de R$' . number_format(($grandTotal/9)*1.1321, 2, ',', '.').' <b>Com Juros</b> (R$'.number_format($grandTotal*1.1321, 2, ',', '.').')'; ?></option>
+		<?php }}?>
+		
+		<?php
+		if ($semjuros >= '10'){
+		if ($grandTotal/10 >= $parcelaminima){?>
+		<option value="10"><?php echo '10x de R$' . number_format($grandTotal/10, 2, ',', '.').' <b>Sem Juros</b>'; ?></option>
+		<?php }} else {
+		if ($grandTotal/10 >= $parcelaminima){?>
+		<option value="10"><?php echo '10x de R$' . number_format(($grandTotal/10)*1.1459, 2, ',', '.').' <b>Com Juros</b> (R$'.number_format($grandTotal*1.1459, 2, ',', '.').')'; ?></option>
+		<?php }}?>
+		
+	  </select>
+	  
+	  
+		</span>
+	  </div>
+  <?php } ?>
+  
+</div>
+<div>
+    <?php echo $this->getMethod()->getConfigData('message');?>
+</div>

@@ -1,0 +1,35 @@
+input {
+    border-radius: 10px;
+}
+
+select {
+    border-radius: 10px;
+}
+
+
+.expiration-date select {
+    margin-bottom: 10px;
+    width: 50% !important;
+}
+
+.expiration-date input {
+    margin-bottom: 10px;
+}
+.month-exp {
+	width:49%;
+	float:left;
+}
+
+.year-exp {
+	width:49%;
+	float:left;
+}
+
+.expiration-date p {
+    font-weight: bolder;
+}
+
+.expiration-date {
+    padding: 10px;
+    padding-top: 30px;
+}

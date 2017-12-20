@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Urldev_Hubmoney>
+      <active>true</active>
+      <codePool>local</codePool>
+       
+      <depends>
+        <Mage_Payment />
+      </depends>
+    </Urldev_Hubmoney>
+  </modules>
+</config>

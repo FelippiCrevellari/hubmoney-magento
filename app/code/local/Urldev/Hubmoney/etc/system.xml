@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<config>    
+  <sections>
+    <payment>
+      <groups>
+        <hubmoney translate="label" module="hubmoney">
+          <label>Modulo Hubmoney</label>
+          <sort_order>1000</sort_order>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
+          <show_in_store>0</show_in_store>
+          <fields>
+            <title translate="label">
+              <label>Titulo</label>
+              <frontend_type>text</frontend_type>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+              <sort_order>1</sort_order>
+            </title>
+            <active translate="label">
+              <label>Habilitar</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+              <sort_order>2</sort_order>
+            </active>
+            <order_status translate="label">
+              <label>Status novo pedido</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_order_status</source_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+              <sort_order>3</sort_order>
+            </order_status>
+            <allowspecific translate="label">
+              <label>Configuração de paises</label>
+              <frontend_type>allowspecific</frontend_type>
+              <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+              <sort_order>4</sort_order>
+            </allowspecific>
+            <specificcountry translate="label">
+              <label>Pais permitidos</label>
+              <frontend_type>multiselect</frontend_type>
+              <source_model>adminhtml/system_config_source_country</source_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+              <sort_order>5</sort_order>
+            </specificcountry>
+			<user_name translate="label">
+               <label>Usuário</label>
+               <frontend_type>text</frontend_type>                    
+               <sort_order>6</sort_order>
+               <show_in_default>1</show_in_default>
+               <show_in_website>1</show_in_website>
+               <show_in_store>1</show_in_store>
+            </user_name>      
+			
+			<user_password  translate="label">
+               <label>Password </label>
+               <frontend_type>text</frontend_type>                    
+               <sort_order>7</sort_order>
+               <show_in_default>1</show_in_default>
+               <show_in_website>1</show_in_website>
+               <show_in_store>1</show_in_store>
+            </user_password>
+			<user_wokingop  translate="label">
+               <label>Working OP </label>
+               <frontend_type>text</frontend_type>                    
+               <sort_order>8</sort_order>
+               <show_in_default>1</show_in_default>
+               <show_in_website>1</show_in_website>
+               <show_in_store>1</show_in_store>
+            </user_wokingop>
+
+			<user_gatwayuuid translate="label">
+               <label>Gatway UUid </label>
+               <frontend_type>text</frontend_type>                    
+               <sort_order>9</sort_order>
+               <show_in_default>1</show_in_default>
+               <show_in_website>1</show_in_website>
+               <show_in_store>1</show_in_store>
+            </user_gatwayuuid>
+			
+			<capture_autorize translate="label">
+               <label>Capturar</label>
+               <frontend_type>text</frontend_type>                    
+               <sort_order>10</sort_order>
+               <show_in_default>1</show_in_default>
+               <show_in_website>1</show_in_website>
+               <show_in_store>1</show_in_store>
+			   <comment><![CDATA[<p><b>false</b> - Para apenas autorizar o pagamento.</p><p><b>true</b> - Para autorizar e capturar o pagamento.</p>]]></comment>
+            </capture_autorize>
+			
+			<active_parc translate="label">
+              <label>Habilitar Parcelamento</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+              <sort_order>11</sort_order>
+            </active_parc>
+			
+			<min_parc translate="label">
+               <label>Parcela Mininma</label>
+               <frontend_type>text</frontend_type>                    
+               <sort_order>12</sort_order>
+               <show_in_default>1</show_in_default>
+               <show_in_website>1</show_in_website>
+               <show_in_store>1</show_in_store>
+			    <comment><![CDATA[<p><b>Valor Padrão R$ 5,00</b> - Se não preenchido.</p> ]]></comment>
+            </min_parc>
+			
+			<sem_juros translate="label">
+               <label>Parcelas sem juros</label>
+               <frontend_type>text</frontend_type>                    
+               <sort_order>13</sort_order>
+               <show_in_default>1</show_in_default>
+               <show_in_website>1</show_in_website>
+               <show_in_store>1</show_in_store>
+			    <comment><![CDATA[<p><b>Valor Padrão 3</b> - Se não preenchido.</p> ]]></comment>
+            </sem_juros>
+			
+			
+          </fields>
+        </hubmoney>
+      </groups>
+    </payment>
+  </sections>
+</config>
